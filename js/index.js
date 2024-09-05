@@ -26,11 +26,6 @@ document.addEventListener('DOMContentLoaded', function() {
             hiddenQuantityInput.value = this.value;
         });
     });
-
-
-    
-    
-
 });
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -116,3 +111,23 @@ function validatePassword() {
     }
     return true;
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    const searchButton = document.getElementById('searchButton');
+    const searchInput = document.getElementById('searchInput');
+
+    function performSearch() {
+        const keyword = searchInput.value.trim();
+        if (keyword !== '') {
+            window.location.href = `?search=${encodeURIComponent(keyword)}`;
+        }
+    }
+
+    searchButton.addEventListener('click', performSearch);
+
+    searchInput.addEventListener('keypress', function (event) {
+        if (event.key === 'Enter') {
+            performSearch();
+        }
+    });
+});

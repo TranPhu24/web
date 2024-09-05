@@ -66,10 +66,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header("Location: cart.php");
         exit();
     } elseif (isset($_POST['checkout'])) {
-        // Checkout process
         $user_id = $_SESSION['user_id'];
 
-        // Fetch cart items for the user
         $stmt = $pdo->prepare("SELECT p.name, p.description, c.quantity, p.price, c.product_id FROM cart c JOIN products p ON c.product_id = p.id WHERE c.user_id = :user_id");
         $stmt->execute(['user_id' => $user_id]);
         $cart_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -108,7 +106,6 @@ $stmt = $pdo->prepare("SELECT p.name, p.description, c.quantity, p.price, c.prod
 $stmt->execute(['user_id' => $_SESSION['user_id']]);
 $cart_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Calculate the total price
 $total_price = 0;
 foreach ($cart_items as $item) {
     $total_price += $item['price'] * $item['quantity'];

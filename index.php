@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'connectdb.php'; // Kết nối cơ sở dữ liệu
+include 'connectdb.php'; 
 
 $category_id = isset($_GET['category_id']) ? intval($_GET['category_id']) : 0;
 $search_keyword = isset($_GET['search']) ? trim($_GET['search']) : '';
@@ -89,127 +89,124 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </ul>
     </nav>
 
-    <!-- Main Content -->
     <main>
+        <section class="products">
+        <?php if (count($products) > 0): ?>
+            <ul style="display: flex; flex-wrap: wrap; gap: 20px; padding: 0; list-style: none;">
+                <?php foreach ($products as $product): ?>
+                    <?php 
 
-    <section class="products">
-    <?php if (count($products) > 0): ?>
-        <ul style="display: flex; flex-wrap: wrap; gap: 20px; padding: 0; list-style: none;">
-            <?php foreach ($products as $product): ?>
-                <?php 
+                    $category_image_path_map = [
+                        1 => 'but', // Bút các loại
+                        2 => 'bop', // Hộp bút
+                        3 => 'thuoc', // Thước kẻ
+                        4 => 'kep', // Kẹp/Đựng tài liệu
+                        5 => 'tap', // Tập vở
+                        6 => 'khac', // Dụng cụ học tập khác
+                    ];
 
-                $category_image_path_map = [
-                    1 => 'but', // Bút các loại
-                    2 => 'bop', // Hộp bút
-                    3 => 'thuoc', // Thước kẻ
-                    4 => 'kep', // Kẹp/Đựng tài liệu
-                    5 => 'tap', // Tập vở
-                    6 => 'khac', // Dụng cụ học tập khác
-                ];
+                    $image_subdirectory = $category_image_path_map[$product['category_id']];
+                    ?>
+                    
+                    <li class="product-item">
+                        <img src="images/<?php echo htmlspecialchars($image_subdirectory); ?>/<?php echo htmlspecialchars($product['image']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" class="product-image-small" />
+                        <div class="product-summary">
+                            <h3><?php echo htmlspecialchars($product['name']); ?></h3>
+                            <p class="price"><?php echo number_format($product['price'], 0, ',', '.'); ?> VND</p>
+                            <button class="details-button">Xem chi tiết</button>
+                        </div>
 
-                $image_subdirectory = $category_image_path_map[$product['category_id']];
-                ?>
-                
-                <li class="product-item">
-                    <img src="images/<?php echo htmlspecialchars($image_subdirectory); ?>/<?php echo htmlspecialchars($product['image']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" class="product-image-small" />
-                    <div class="product-summary">
-                        <h3><?php echo htmlspecialchars($product['name']); ?></h3>
-                        <p class="price"><?php echo number_format($product['price'], 0, ',', '.'); ?> VND</p>
-                        <button class="details-button">Xem chi tiết</button>
-                    </div>
+                        <div class="product-full-details">
+                            <img src="images/<?php echo htmlspecialchars($image_subdirectory); ?>/<?php echo htmlspecialchars($product['image']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" class="product-image-large" />
+                            <p class="product-description"><?php echo htmlspecialchars($product['description']); ?></p>
+                            <form action="cart.php" method="POST">
+                                <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
+                                <label for="quantity-<?php echo $product['id']; ?>">Số lượng:</label>
+                                <input type="number" id="quantity-<?php echo $product['id']; ?>" name="quantity" value="1" min="1" class="quantity-input">
+                                <button type="submit" class="add-to-cart">Thêm vào giỏ hàng</button>
+                            </form>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+            <?php else: ?>
+                <p>Chưa có sản phẩm nào trong danh mục này.</p>
+            <?php endif; ?>
+        </section>
 
-                    <div class="product-full-details">
-                        <img src="images/<?php echo htmlspecialchars($image_subdirectory); ?>/<?php echo htmlspecialchars($product['image']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" class="product-image-large" />
-                        <p class="product-description"><?php echo htmlspecialchars($product['description']); ?></p>
-                        <form action="cart.php" method="POST">
-                            <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
-                            <label for="quantity-<?php echo $product['id']; ?>">Số lượng:</label>
-                            <input type="number" id="quantity-<?php echo $product['id']; ?>" name="quantity" value="1" min="1" class="quantity-input">
-                            <button type="submit" class="add-to-cart">Thêm vào giỏ hàng</button>
-                        </form>
-                    </div>
+        <aside class="sidebar">
+            <h2>TÌM SẢN PHẨM THEO GIÁ</h2>
+            <hr>
+            <ul>
+                <li>
+                    <a href="#" class="category-toggle" data-category-id="1">Bút các loại</a>
+                    <ul class="sub-menu">
+                        <li><a href="?category_id=1&max_price=20000">Dưới 20000 VND</a></li>
+                        <li><a href="?category_id=1&min_price=20000&max_price=50000">Từ 20000 -> 50000 VND</a></li>
+                        <li><a href="?category_id=1&min_price=50000&max_price=100000">Từ 50000 -> 100000 VND</a></li>
+                        <li><a href="?category_id=1&min_price=100000">Trên 100000 VND</a></li>
+                    </ul>
                 </li>
-            <?php endforeach; ?>
-        </ul>
-    <?php else: ?>
-        <p>Chưa có sản phẩm nào trong danh mục này.</p>
-    <?php endif; ?>
-</section>
-
-<aside class="sidebar">
-    <h2>TÌM SẢN PHẨM THEO GIÁ</h2>
-    <hr>
-    <ul>
-        <li>
-            <a href="#" class="category-toggle" data-category-id="1">Bút các loại</a>
-            <ul class="sub-menu">
-                <li><a href="?category_id=1&max_price=20000">Dưới 20000 VND</a></li>
-                <li><a href="?category_id=1&min_price=20000&max_price=50000">Từ 20000 đến 50000 VND</a></li>
-                <li><a href="?category_id=1&min_price=50000&max_price=100000">Từ 50000 đến 100000 VND</a></li>
-                <li><a href="?category_id=1&min_price=100000">Trên 100000 VND</a></li>
             </ul>
-        </li>
-    </ul>
-    <ul>
-        <li>
-            <a href="#" class="category-toggle" data-category-id="2">Hộp bút</a>
-            <ul class="sub-menu">
-                <li><a href="?category_id=2&max_price=20000">Dưới 20000 VND</a></li>
-                <li><a href="?category_id=2&min_price=20000&max_price=50000">Từ 20000 đến 50000 VND</a></li>
-                <li><a href="?category_id=2&min_price=50000&max_price=100000">Từ 50000 đến 100000 VND</a></li>
-                <li><a href="?category_id=2&min_price=100000">Trên 100000 VND</a></li>
+            <ul>
+                <li>
+                    <a href="#" class="category-toggle" data-category-id="2">Hộp bút</a>
+                    <ul class="sub-menu">
+                        <li><a href="?category_id=2&max_price=20000">Dưới 20000 VND</a></li>
+                        <li><a href="?category_id=2&min_price=20000&max_price=50000">Từ 20000 -> 50000 VND</a></li>
+                        <li><a href="?category_id=2&min_price=50000&max_price=100000">Từ 50000 -> 100000 VND</a></li>
+                        <li><a href="?category_id=2&min_price=100000">Trên 100000 VND</a></li>
+                    </ul>
+                </li>
             </ul>
-        </li>
-    </ul>
-    <ul>
-        <li>
-            <a href="#" class="category-toggle" data-category-id="3">Thước kẻ</a>
-            <ul class="sub-menu">
-                <li><a href="?category_id=3&max_price=20000">Dưới 20000 VND</a></li>
-                <li><a href="?category_id=3&min_price=20000&max_price=50000">Từ 20000 đến 50000 VND</a></li>
-                <li><a href="?category_id=3&min_price=50000&max_price=100000">Từ 50000 đến 100000 VND</a></li>
-                <li><a href="?category_id=3&min_price=100000">Trên 100000 VND</a></li>
+            <ul>
+                <li>
+                    <a href="#" class="category-toggle" data-category-id="3">Thước kẻ</a>
+                    <ul class="sub-menu">
+                        <li><a href="?category_id=3&max_price=20000">Dưới 20000 VND</a></li>
+                        <li><a href="?category_id=3&min_price=20000&max_price=50000">Từ 20000 -> 50000 VND</a></li>
+                        <li><a href="?category_id=3&min_price=50000&max_price=100000">Từ 50000 -> 100000 VND</a></li>
+                        <li><a href="?category_id=3&min_price=100000">Trên 100000 VND</a></li>
+                    </ul>
+                </li>
             </ul>
-        </li>
-    </ul>
-    <ul>
-        <li>
-            <a href="#" class="category-toggle" data-category-id="4">Kẹp/Đựng tài liệu</a>
-            <ul class="sub-menu">
-                <li><a href="?category_id=4&max_price=20000">Dưới 20000 VND</a></li>
-                <li><a href="?category_id=4&min_price=20000&max_price=50000">Từ 20000 đến 50000 VND</a></li>
-                <li><a href="?category_id=4&min_price=50000&max_price=100000">Từ 50000 đến 100000 VND</a></li>
-                <li><a href="?category_id=4&min_price=100000">Trên 100000 VND</a></li>
+            <ul>
+                <li>
+                    <a href="#" class="category-toggle" data-category-id="4">Kẹp/Đựng tài liệu</a>
+                    <ul class="sub-menu">
+                        <li><a href="?category_id=4&max_price=20000">Dưới 20000 VND</a></li>
+                        <li><a href="?category_id=4&min_price=20000&max_price=50000">Từ 20000 -> 50000 VND</a></li>
+                        <li><a href="?category_id=4&min_price=50000&max_price=100000">Từ 50000 -> 100000 VND</a></li>
+                        <li><a href="?category_id=4&min_price=100000">Trên 100000 VND</a></li>
+                    </ul>
+                </li>
             </ul>
-        </li>
-    </ul>
-    <ul>
-        <li>
-            <a href="#" class="category-toggle" data-category-id="5">Tập vở</a>
-            <ul class="sub-menu">
-                <li><a href="?category_id=5&max_price=20000">Dưới 20000 VND</a></li>
-                <li><a href="?category_id=5&min_price=20000&max_price=50000">Từ 20000 đến 50000 VND</a></li>
-                <li><a href="?category_id=5&min_price=50000&max_price=100000">Từ 50000 đến 100000 VND</a></li>
-                <li><a href="?category_id=5&min_price=100000">Trên 100000 VND</a></li>
+            <ul>
+                <li>
+                    <a href="#" class="category-toggle" data-category-id="5">Tập vở</a>
+                    <ul class="sub-menu">
+                        <li><a href="?category_id=5&max_price=20000">Dưới 20000 VND</a></li>
+                        <li><a href="?category_id=5&min_price=20000&max_price=50000">Từ 20000 -> 50000 VND</a></li>
+                        <li><a href="?category_id=5&min_price=50000&max_price=100000">Từ 50000 -> 100000 VND</a></li>
+                        <li><a href="?category_id=5&min_price=100000">Trên 100000 VND</a></li>
+                    </ul>
+                </li>
             </ul>
-        </li>
-    </ul>
-    <ul>
-        <li>
-            <a href="#" class="category-toggle" data-category-id="6">Dụng cụ khác</a>
-            <ul class="sub-menu">
-                <li><a href="?category_id=6&max_price=20000">Dưới 20000 VND</a></li>
-                <li><a href="?category_id=6&min_price=20000&max_price=50000">Từ 20000 đến 50000 VND</a></li>
-                <li><a href="?category_id=6&min_price=50000&max_price=100000">Từ 50000 đến 100000 VND</a></li>
-                <li><a href="?category_id=6&min_price=100000">Trên 100000 VND</a></li>
+            <ul>
+                <li>
+                    <a href="#" class="category-toggle" data-category-id="6">Dụng cụ khác</a>
+                    <ul class="sub-menu">
+                        <li><a href="?category_id=6&max_price=20000">Dưới 20000 VND</a></li>
+                        <li><a href="?category_id=6&min_price=20000&max_price=50000">Từ 20000 -> 50000 VND</a></li>
+                        <li><a href="?category_id=6&min_price=50000&max_price=100000">Từ 50000 -> 100000 VND</a></li>
+                        <li><a href="?category_id=6&min_price=100000">Trên 100000 VND</a></li>
+                    </ul>
+                </li>
             </ul>
-        </li>
-    </ul>
-</aside>
+        </aside>
 
     </main>
 
-    <!-- Footer Section -->
     <footer>
     <div class="contact-fanpage">
         <a href="#"><img src="/images/facebook.svg" alt="facebook"></a>
