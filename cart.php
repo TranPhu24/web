@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $stmt->execute(['product_id' => $product_id]);
             }
 
-            header("Location: index2.php");
+            header("Location: index.php");
             exit();
         } else {
             echo "<script>alert('Số lượng hàng không đủ');</script>";
@@ -129,7 +129,7 @@ foreach ($cart_items as $item) {
 
     <header>
         <div class="logo">
-            <a href="index2.php">
+            <a href="index.php">
                 <img src="images/logo.png" alt="Moji Logo">
             </a>
         </div>

@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['change_password'])) {
 <body>
     <header>
         <div class="logo">
-            <a href="index2.php">
+            <a href="index.php">
                 <img src="images/logo.png" alt="Moji Logo">
             </a>
         </div>

@@ -37,6 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng ký</title>
     <link rel="stylesheet" href="css/register.css">
+    <script src="js/index.js"></script>
+
 </head>
 <body>
     <div class="container">
@@ -44,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="form-header">
                 <h2>ĐĂNG KÝ</h2>
             </div>
-            <form action="register.php" method="POST">
+            <form action="register.php" method="POST" onsubmit="return validatePassword()">
                 <div class="form-group">
                     <label for="username">Tên đăng nhập (*)</label>
                     <input type="text" id="username" name="username" required>
@@ -55,6 +57,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                            pattern="(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}" 
                            title="Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ và số" 
                            required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Nhập lại mật khẩu (*)</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword"
+                    title="Mật khẩu không khớp"
+                    required>
                 </div>
                 <div class="form-group">
                     <label for="phone">Số điện thoại (*)</label>

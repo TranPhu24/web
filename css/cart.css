@@ -54,13 +54,13 @@ hr {
 }
 
 .total-price {
-    margin-left: 20px;
+    margin-left: 0px;
     text-align: right;
     width: 500px;
 }
 
 .cart-actions {
-    margin-top: 10px;
+    margin-top: -100px;
     text-align: right;
 }
 .continue-shopping{

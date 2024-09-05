@@ -24,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_product'])) {
 
     echo "<script>alert('Mặt hàng đã được cập nhật');</script>"; }
 
-// Xử lý xóa mặt hàng
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_product'])) {
     $id = $_POST['id'];
 
