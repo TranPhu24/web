@@ -11,9 +11,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_product'])) {
     $description = $_POST['description'];
     $price = $_POST['price'];
     $quantity = $_POST['quantity'];
+    $category_id=$_POST['category_id'];
 
-    $stmt = $pdo->prepare("INSERT INTO products (name, description, price, quantity) VALUES (:name, :description, :price, :quantity)");
-    $stmt->execute(['name' => $name, 'description' => $description, 'price' => $price, 'quantity' => $quantity]);
+
+    $stmt = $pdo->prepare("INSERT INTO products (name, description, price, quantity, category_id) VALUES (:name, :description, :price, :quantity, :category_id)");
+    $stmt->execute(['name' => $name, 'description' => $description, 'price' => $price, 'quantity' => $quantity, 'category_id'=>$category_id]);
 
     echo "<script>alert('Mặt hàng mới đã được thêm.');</script>"; 
 }
@@ -99,8 +101,10 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <input type="number" id="price" name="price" required><br>
     <label for="quantity">Số lượng:</label>
     <input type="number" id="quantity" name="quantity" required><br>
-    <button type="submit" name="add_product">Thêm mặt hàng</button>
+    <label for="category_id">Loại hàng:</label>
+    <input type="number" id="category_id" name="category_id" required><br>
     
+    <button type="submit" name="add_product">Thêm mặt hàng</button>
 </form>
 
 </body>
