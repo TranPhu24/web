@@ -14,15 +14,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
-            header("Location: index.php ");
+            $_SESSION['role'] = $user['role'];
+
+            if ($user['role'] == 'admin') {
+                header("Location: admin/admin.php");
+            } else {
+                header("Location: index.php");
+            }
             exit();
         } else {
-            echo "<script>alert('Tên đăng nhập hoặc mật khẩu không đúng.');</script>";        }
+            echo "<script>alert('Tên đăng nhập hoặc mật khẩu không đúng.');</script>";
+        }
     } catch (PDOException $e) {
         echo "Lỗi: " . $e->getMessage();
     }
 }
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="vi">

@@ -158,7 +158,7 @@ foreach ($cart_items as $item) {
                                 <th>Số lượng</th>
                                 <th>Giá</th>
                                 <th>Tổng cộng</th>
-                                <th>Hành động</th>
+                                <th>Thao tác</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -183,7 +183,7 @@ foreach ($cart_items as $item) {
                     <div class="total-price">
                         <h2>Tổng giá: <?php echo number_format($total_price, 0, ',', '.'); ?> VND</h2>
                         <div class="cart-actions">
-                            <a href="index2.php" class="continue-shopping">Mua tiếp</a>
+                            <a href="index.php" class="continue-shopping">Mua tiếp</a>
                             <form action="" method="POST" style="display: inline;">
                                 <button type="submit" name="checkout" class="checkout">Thanh toán</button>
                             </form>
@@ -196,9 +196,16 @@ foreach ($cart_items as $item) {
         </div>
     </main>
 
-    <!-- Footer Section -->
     <footer>
-        <p>&copy; 2024 Moji Shop. All Rights Reserved.</p>
-    </footer>
+    <div class="contact-fanpage">
+        <a href="#"><img src="/images/facebook.svg" alt="facebook"></a>
+        <a href="#"><img src="/images/instagram.svg" alt="instagram"></a>
+        <a href="#"><img src="/images/tiktok.svg" alt="tiktok"></a>
+    </div>
+    <div class="contact-info">
+        <p><b>Phone</b>: 1-234-567-890</p>
+        <p><b>Email</b>: info@mojishop.com</p>
+    </div>
+</footer>
 </body>
 </html>

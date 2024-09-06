@@ -3,12 +3,33 @@ CREATE TABLE users (
     username VARCHAR(50) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
     phone VARCHAR(20) UNIQUE NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL
+    email VARCHAR(100) UNIQUE NOT NULL,
+    role VARCHAR(20) NOT NULL CHECK (role IN ('admin', 'khach')) 
 );
 delete from USers
 drop table USERS
 select*from USERS
 
+INSERT INTO users (username, password, phone, email, role) 
+VALUES ('Phu', '$2y$10$n1oHXqpwqsrTFuPYKaIPGujx4BRm7vR.DHTFaMeT715.6Zb1kenkC',
+		'123456789', 'admin@example.com', 'admin');
+
+CREATE TABLE categories (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+drop table categories
+
+
+INSERT INTO categories (name) VALUES 
+('Bút các loại'),
+('Hộp bút'),
+('Thước kẻ'),
+('Kẹp/Đựng tài liệu'),
+('Tập vở'),
+('Dụng cụ học tập khác');
+select *from categories
+delete from categories
 
 CREATE TABLE products (
     id SERIAL PRIMARY KEY,
@@ -286,22 +307,7 @@ delete from products
 
 
 
-CREATE TABLE categories (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL
-);
-drop table categories
 
-
-INSERT INTO categories (name) VALUES 
-('Bút các loại'),
-('Hộp bút'),
-('Thước kẻ'),
-('Kẹp/Đựng tài liệu'),
-('Tập vở'),
-('Dụng cụ học tập khác');
-select *from categories
-delete from categories
 
 CREATE TABLE search_keywords (
     id SERIAL PRIMARY KEY,

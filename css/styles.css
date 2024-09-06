@@ -73,6 +73,7 @@ header {
 .search-suggestions li {
     padding: 10px;
     cursor: pointer;
+    border: none;
     
 }
 .search-suggestions li:hover {

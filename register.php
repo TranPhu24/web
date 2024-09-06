@@ -6,29 +6,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
     $phone = $_POST['phone'];
     $email = $_POST['email'];
+    $role = 'khach'; 
 
     try {
-        $stmt = $pdo->prepare("INSERT INTO users (username, password, phone, email) 
-                                VALUES (:username, :password, :phone, :email)");
+        $stmt = $pdo->prepare("INSERT INTO users (username, password, phone, email, role) 
+                                VALUES (:username, :password, :phone, :email, :role)");
         
         $stmt->execute([
             'username' => $username,
             'password' => $password,
             'phone' => $phone,
-            'email' => $email
+            'email' => $email,
+            'role' => $role  
         ]);
 
         header("Location: login.php");
         exit();
     } catch (PDOException $e) {
         if ($e->getCode() == 23505) {  
-            echo "<script>alert('Lỗi: Tên đăng nhập hoặc email đã tồn tại. Vui lòng thử lại.');</script>";
+            echo "<script>alert('Lỗi: Tên đăng nhập, email hoặc số điện thoại đã tồn tại. Vui lòng thử lại.');</script>";
         } else {
             echo "<script>alert('Lỗi: " . $e->getMessage() . "');</script>";
         }    
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="vi">

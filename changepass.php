@@ -150,7 +150,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['change_password'])) {
 
     <!-- Footer Section -->
     <footer>
-        <p>&copy; 2024 Moji Shop. All Rights Reserved.</p>
-    </footer>
+    <div class="contact-fanpage">
+        <a href="#"><img src="/images/facebook.svg" alt="facebook"></a>
+        <a href="#"><img src="/images/instagram.svg" alt="instagram"></a>
+        <a href="#"><img src="/images/tiktok.svg" alt="tiktok"></a>
+    </div>
+    <div class="contact-info">
+        <p><b>Phone</b>: 1-234-567-890</p>
+        <p><b>Email</b>: info@mojishop.com</p>
+    </div>
+</footer>
 </body>
 </html>
