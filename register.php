@@ -32,7 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -41,7 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Đăng ký</title>
     <link rel="stylesheet" href="css/register.css">
     <script src="js/index.js"></script>
-
 </head>
 <body>
     <div class="container">

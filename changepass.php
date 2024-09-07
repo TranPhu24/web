@@ -148,7 +148,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['change_password'])) {
         </div>
     </main>
 
-    <!-- Footer Section -->
     <footer>
     <div class="contact-fanpage">
         <a href="#"><img src="/images/facebook.svg" alt="facebook"></a>

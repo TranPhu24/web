@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+
 document.addEventListener('DOMContentLoaded', function() {
     var searchInput = document.getElementById('searchInput');
     var searchSuggestions = document.getElementById('searchSuggestions');
@@ -78,6 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.category-toggle').forEach(function(toggle) {
         toggle.addEventListener('click', function(e) {
@@ -102,6 +104,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+
 function validatePassword() {
     const password = document.getElementById("password").value;
     const confirmPassword = document.getElementById("confirmPassword").value;
@@ -111,6 +115,7 @@ function validatePassword() {
     }
     return true;
 }
+
 
 document.addEventListener('DOMContentLoaded', function () {
     const searchButton = document.getElementById('searchButton');

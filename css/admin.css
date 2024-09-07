@@ -71,3 +71,16 @@ label {
     height: 50px;
     
 }
+
+li{
+    list-style-type: none;
+}
+a{
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+
+}
+nav a:hover {
+    color: black;
+}
